@@ -69,8 +69,8 @@ ggplot(data = Western_Europe) +
   geom_line(aes(x = Year, y = homicides_per_100k, color = Entity)) +
   labs(title = "Homicides In Europe",
      y = "Homicides per 100k",
-     x = "Year") +
-  scale_y_continuous(breaks=seq(0,80,10))
+     x = "Year", 
+     color = "Country")
 ```
 Alright, the homicide rates should all be descending over time. What a comfort. But the viz is not super clear. Let's check the rates for individual countries.
 
@@ -92,8 +92,6 @@ ggplot(data = Western_Europe) +
   facet_wrap(~ Entity, ncol = 2, nrow = 3)
 
 ```
-
-
 
 ## Compare the trends in homicide with the pattern of reign duration among Danish rulers through time.
 
@@ -121,7 +119,7 @@ ggplot(data = Danish_monarchs, aes(x = midyear, y = reign_length2)) +
 #It does appear that as homicides went down in Scandinavia, the reign length increased for the danish monarchs - times became more peaceful. 
 ```
 
-**Final tasks:**
+## Final tasks:
 
 1) Plot: In the facetted plot above, move the legend from the current position on the side to below the facets, and label it "Country" instead of "Entity".
 
