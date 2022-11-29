@@ -70,7 +70,8 @@ ggplot(data = Western_Europe) +
   labs(title = "Homicides In Europe",
      y = "Homicides per 100k",
      x = "Year", 
-     color = "Country")
+     color = "Country") +
+  theme(legend.position = "bottom")
 ```
 Alright, the homicide rates should all be descending over time. What a comfort. But the viz is not super clear. Let's check the rates for individual countries.
 
