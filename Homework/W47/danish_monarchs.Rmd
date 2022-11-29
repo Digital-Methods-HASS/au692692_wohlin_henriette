@@ -1,0 +1,60 @@
+---
+title: "Danish monarchs"
+author: "Henriette Stenius Wohlin"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Danish Monarchs and set up
+
+This is an R markdown document for my assignment about danish monarchs for week 47. 
+
+
+```{r Setup}
+library(tidyverse)
+library(here)
+```
+
+```{r load-data}
+monarchs <- read.csv2("data/danish_monarchs.csv")
+```
+
+
+## Data fixing
+
+I had some problems with sorting my monarchs so I had to Google how to do it.
+Rstudio would sort my x-axis alphabetically and not in order of my data.
+
+To change this I had to:
+
+```{r Fixing data, echo=TRUE}
+#Turn your 'treatment' column into a character vector
+monarchs$monarch. <- as.character(monarchs$monarch.)
+#Then turn it back into a factor with the levels in the correct order
+monarchs$monarch. <- factor(monarchs$monarch., levels=unique(monarchs$monarch.))
+```
+
+Source: https://stackoverflow.com/questions/12774210/how-do-you-specifically-order-ggplot2-x-axis-instead-of-alphabetical-order 
+
+This code have to before the following code in order for it to work
+
+## Visualize the data
+
+```{r Danish monarchs and reign over time, echo=TRUE}
+monarchs %>% 
+  select(monarch., reign_length) %>% 
+  ggplot(aes(x = monarch., y = reign_length)) +
+  geom_col() +
+  labs(title = "Danish monarchs reign in years",
+       y = "Years",
+       x = "Monarch") +
+  scale_y_continuous(breaks=seq(0,60,5)) +
+  theme(axis.text.x = element_text(angle = 90))
+```
