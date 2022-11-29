@@ -73,6 +73,8 @@ ggplot(data = Western_Europe) +
      color = "Country") +
   theme(legend.position = "bottom")
 ```
+
+
 Alright, the homicide rates should all be descending over time. What a comfort. But the viz is not super clear. Let's check the rates for individual countries.
 
 ## Uncouple the homicides of individual countries for easier view
@@ -124,7 +126,7 @@ ggplot(data = Danish_monarchs, aes(x = midyear, y = reign_length2)) +
 
 1) Plot: In the facetted plot above, move the legend from the current position on the side to below the facets, and label it "Country" instead of "Entity".
 
-
+Check "Homicides in Europe". 
 
 2) Rmarkdown: 
 
@@ -135,4 +137,4 @@ ggplot(data = Danish_monarchs, aes(x = midyear, y = reign_length2)) +
 
 3) Question: In <250 words articulate your answer on the basis of the data visualisations to the following question: are we more civilized today?
 
-As we could see with danish monarchs and their reign over time, it would appear that we have become more civilized today. This can especially be seen in the "Homicides in Europe over time" as we can see that homicides have gone down drastically. 
+As we could see with danish monarchs and their reign over time, it would appear that we have become more civilized today. This can especially be seen in the "Homicides in Europe over time" as we can see that homicides have gone down drastically in the countries shown. 
