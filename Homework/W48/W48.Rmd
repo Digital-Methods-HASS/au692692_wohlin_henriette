@@ -1,0 +1,105 @@
+---
+title: "W48"
+author: "Henriette Stenius Wohlin"
+date: "2022-12-04, updated `r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Set up
+
+```{r libraries, warning=FALSE, message=FALSE}
+library(rvest)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(janitor)
+library(tidyverse)
+library(forcats)
+library(scales)
+```
+
+## Scrape the data
+
+First we scrape data from website: 
+```{r url}
+url <- "https://www.worldometers.info/world-population/population-by-country/"
+# scrape the website
+url_html <- read_html(url)
+```
+-Code from Adela Sobotkova, https://github.com/Digital-Methods-HASS/WebscrapingPoliceKillings/blob/master/scraping.Rmd
+
+Now we can extract the whole HTML table:
+
+```{r scrape-table}
+whole_table <- url_html %>% 
+ html_nodes("table") %>%
+ html_table()  #str(whole_table) turns out to be a list
+str(whole_table)
+whole_table[[1]]
+whole_table
+```
+-Code from Adela Sobotkova, https://github.com/Digital-Methods-HASS/WebscrapingPoliceKillings/blob/master/scraping.Rmd
+
+Now we make the data more readable in a new_table, or so we can visualize it better:
+
+```{r html-to-df}
+new_table <- do.call(cbind,unlist(whole_table, recursive = FALSE)) 
+head(new_table)
+```
+-Code from Adela Sobotkova, https://github.com/Digital-Methods-HASS/WebscrapingPoliceKillings/blob/master/scraping.Rmd
+
+I want to rename columm 2 and 3, so it has no ( ) in them:
+```{r}
+colnames(new_table)[2] = "Country"
+colnames(new_table)[3] = "Population"
+```
+Source: https://sparkbyexamples.com/r-programming/rename-column-in-r/
+
+The dataset is currently a character matrix. I will change it to tibble so we can clean it up
+```{r clean-data}
+new_table <- as_tibble(new_table)
+str(new_table)
+```
+However the Population columm is still a character vector and has , between the numbers. This means we can't change the vector. So we use this code:
+```{r}
+col_conv <-  c("Population")                                             
+
+my_data_updated <-  new_table                                            
+my_data_updated[ , col_conv] <-  lapply(my_data_updated[ , col_conv], 
+                                       function(x){ as.numeric(as.character(gsub(",", "", x))) })
+```
+Source: https://www.youtube.com/watch?v=FjhEVnWmvOs
+
+Now we can change Population from a character vector to a numeric one:
+```{r}
+data <- my_data_updated %>% 
+	mutate(Population = as.numeric(Population))
+```
+-Code from Adela Sobotkova, https://github.com/Digital-Methods-HASS/WebscrapingPoliceKillings/blob/master/scraping.Rmd
+
+## Combaring population between countries
+
+Now I want to try and compare the population of Denmark, Norway, Finland and Sweden:
+```{r plot-world, eval=TRUE}
+my_data_updated %>% 
+  mutate(Country = fct_reorder(Country, desc(Population))) %>%
+    group_by(Country, 
+           Population) %>% 
+  filter(Country %in% c("Norway", "Sweden", "Finland", "Denmark")) %>%
+ggplot(aes(x = Country, y = Population, color = Country)) +
+geom_col() +
+  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6))
+```
+
+-Code from Adela Sobotkova, https://github.com/Digital-Methods-HASS/WebscrapingPoliceKillings/blob/master/scraping.Rmd
+
+Source for scale command: https://www.roelpeters.be/scale-ggplot-y-axis-millions-or-thousands-r/
+
+
+
+
+
