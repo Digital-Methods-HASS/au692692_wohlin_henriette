@@ -12,6 +12,21 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Introduction 
+
+The purpose with this paper is to research the variance of the different types of aircraft and make data visualization. Is one type more frequent used than others? Did more aircrafts enter service during the World War II, or was most of them from before the war? Other goals are to compare countries against each other in aircraft type usage and what year the aircraft entered service. If possible, I also wish to find out if this dataset corresponds with events during World War II. 
+
+To accomplice this I will work in RStudio. Here I will clean up the dataset and then make data visualizations of the above points. By doing this I hope to inform others more of the different types of aircraft used during the World War II and make the information more accessible to the public.
+
+
+
+I acquired the dataset for this project from https://www.kaggle.com/datasets/thomasmuh/world-war-ii-aircrafts?resource=download&select=world_war_2_aircrafts.csv. 
+The csv is listed as world_war_2_aircrafts.csv and includes 1176 Types of WW II Aircrafts. It has 6 columns: Aircraft Type, Aircraft Subtype, Aircraft Name, Year in Service, Country of Origin and Operator(s) if different from country of origin. I needed to create an account on Kaggle.com to gain access to this dataset.  There is only one version, Version 1 (116.61 kB), on Kaggle which is the one I used for my project. 
+
+The source for the dataset can be found on https://en.wikipedia.org/wiki/ListofaircraftofWorldWarII and it is stated on that the author retrieved in on May 19th, 2019. The Wikipedia page will be used in this assignment to get information on the difference between the aircrafts.  
+
+
+
 ## Setup
 
 
@@ -215,7 +230,7 @@ aircrafts_ww2 %>%
 
 If we compare these two graphs it does show that there was an increase in the number of aircrafts being produced during the second war. More aircrafts being produced while war is being fought  also makes sense as many aircrafts get destroyed during war – aircrafts were always evolving to be better than the last and aircrafts from before 1938 might not have cut it anymore. 
 
-Production of new aircrafts seems to slow down at 1943-1944. At 1945 production falls drasti-cally which was most likely as the war was near its end. 
+Production of new aircrafts seems to slow down at 1943-1944. At 1945 production falls drastically which was most likely as the war was near its end. 
 
 
 ## 4. All Aircrafts and Year in service by specific Country of Origin 
